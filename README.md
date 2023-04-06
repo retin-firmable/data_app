@@ -90,7 +90,7 @@ This error occurs when the user tries to use an HTTP method that is not supporte
 In this case, the server will respond with a JSON object containing an error message informing the user that the requested method is not allowed.
 
 
-* *500 Internal Server Error*  
+* **500 Internal Server Error**  
 This error occurs when the server encounters an unexpected condition that prevents it from fulfilling the request.
 In this case, the server will respond with a JSON object containing an error message informing the user that an internal server error has occurred.
 
