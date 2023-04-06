@@ -50,42 +50,42 @@ To ensure that a user can only access their own uploaded files, the user's ID is
 ## Endpoints
 The following endpoints are available in the application:
 
-*/signup* - This endpoint is used to create a new user. The user must provide a valid email address and a password. If the email address is already registered, the endpoint will return an error message.
+**/signup** - This endpoint is used to create a new user. The user must provide a valid email address and a password. If the email address is already registered, the endpoint will return an error message.
 
-*/login* - This endpoint is used to log in an existing user. The user must provide a valid email address and password. If the email address or password is incorrect, the endpoint will return an error message.
+**/login** - This endpoint is used to log in an existing user. The user must provide a valid email address and password. If the email address or password is incorrect, the endpoint will return an error message.
 
-*/csv* - This endpoint is used to upload a CSV file. The file must be in CSV format and must be less than 250MB in size. The endpoint requires the user to be authenticated.
+**/csv** - This endpoint is used to upload a CSV file. The file must be in CSV format and must be less than 250MB in size. The endpoint requires the user to be authenticated.
 
-*/csv/{csv_file_id}/view* - This endpoint is used to view a CSV file. The endpoint requires the user to be authenticated and authorized to view the file.
+**/csv/{csv_file_id}/view** - This endpoint is used to view a CSV file. The endpoint requires the user to be authenticated and authorized to view the file.
 
-*/csv/{csv_file_id}/column/{column_id}* - This endpoint is used to modify the name of a column in a CSV file. The endpoint requires the user to be authenticated and authorized to modify the file.
+**/csv/{csv_file_id}/column/{column_id}** - This endpoint is used to modify the name of a column in a CSV file. The endpoint requires the user to be authenticated and authorized to modify the file.
 
-*/csv/{csv_file_id}/delete* - This endpoint is used to delete a CSV file. The endpoint requires the user to be authenticated and authorized to delete the file.
+**/csv/{csv_file_id}/delete** - This endpoint is used to delete a CSV file. The endpoint requires the user to be authenticated and authorized to delete the file.
 
-*/csv/list* - This endpoint is used to list all the CSV files uploaded by the user. The endpoint requires the user to be authenticated.
+**/csv/list** - This endpoint is used to list all the CSV files uploaded by the user. The endpoint requires the user to be authenticated.
 
 ## Error Handling
-* *400 Bad Request* 
+* **400 Bad Request** 
 This error occurs when the server cannot understand the request due to invalid syntax. It can be caused by malformed requests or invalid parameters.
 In this case, the server will respond with a JSON object containing an error message to inform the user of the issue.
 
 
-* *401 Unauthorized*
+* **401 Unauthorized**
 This error occurs when the user tries to access a resource without providing valid authentication credentials.
 In this case, the server will respond with a JSON object containing an error message asking the user to authenticate themselves.
 
 
-* *403 Forbidden*  
+* **403 Forbidden**  
 This error occurs when the user is authenticated, but they do not have sufficient permissions to access the requested resource.
 In this case, the server will respond with a JSON object containing an error message informing the user that they do not have the required permissions.
 
 
-* *404 Not Found*  
+* **404 Not Found**  
 This error occurs when the server cannot find the requested resource.
 In this case, the server will respond with a JSON object containing an error message informing the user that the requested resource does not exist.
 
 
-* *405 Method Not Allowed*  
+* **405 Method Not Allowed**  
 This error occurs when the user tries to use an HTTP method that is not supported by the server.
 In this case, the server will respond with a JSON object containing an error message informing the user that the requested method is not allowed.
 
@@ -95,25 +95,25 @@ This error occurs when the server encounters an unexpected condition that preven
 In this case, the server will respond with a JSON object containing an error message informing the user that an internal server error has occurred.
 
 ## Future Improvements
-1. *User roles and permissions:*  
+1. **User roles and permissions:**  
 Currently, the app only has two user roles - admin and regular user. Adding more granular user roles and permissions, such as read-only access, would improve the security and usability of the app.
 
-2. *File validation:*  
+2. **File validation:**  
 The app currently allows users to upload any file type, which could potentially pose a security risk. Adding file validation to only allow CSV files would be a good improvement.
 
-3. *Search functionality:*  
+3. **Search functionality:**  
 Adding search functionality to allow users to search for specific files by name, size, or upload date would improve the usability of the app.
 
-4. *Improved UI:*  
+4. **Improved UI:**  
 The current UI is basic and could be improved to provide a better user experience. Adding more interactive features and a better design would make the app more user-friendly.
 
-5. *Pagination:*  
+5. **Pagination:**  
 Currently, all uploaded files are displayed on one page, which can become unwieldy with a large number of files. Implementing pagination would help to improve the app's performance and usability.
 
-6. *File Editing:*  
+6. **File Editing:**  
 Implementing the ability for users to edit CSV files within the app, rather than just viewing them, would make the app more useful.
 
-7. *API integration:*  
+7. **API integration:**  
 Adding API integration would allow users to retrieve and upload CSV files from external sources, providing a more flexible and robust solution.
 
 ## Conclusion
