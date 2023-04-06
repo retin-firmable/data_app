@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CSV File List</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha512-3qPe5XfC5i5awRjK/F8tY1anQ4z0ZlK0Ede1c3qAKblS9Np5QLAxIbhvP8Wf7zPk91alwSkZphEI+AI8CtjPcw==" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha512-SC7Vrjbj36+Jz7N/hwNc++V7Bq/xEJ0Vl83tpQtm1rVjmngCjGVyR6MmyU6zPZsvj31UQmHDAk7s9sTDezd6OA==" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="my-4">CSV File List</h1>
+    <table class="table table-striped">
+      <caption>List of CSV files</caption>
+      <thead>
+        <tr>
+          <th>File Name</th>
+          <th>Size</th>
+          <th>Uploaded By</th>
+          <th>Date Uploaded</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for csv_file in csv_files %}
+          <tr>
+            <td>{{ csv_file.filename }}</td>
+            <td>{{ csv_file.size }} bytes</td>
+            <td>{{ csv_file.user.name }}</td>
+            <td>{{ csv_file.upload_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>
+              <a href="{{ url_for('view_csv_file', csv_file_id=csv_file.id) }}" class="btn btn-sm btn-primary">View</a>
+              <a href="{{ url_for('delete_csv_file', csv_file_id=csv_file.id) }}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="{{ url_for('upload_csv_file') }}" class="btn btn-primary">Upload CSV File</a>
+  </div>
+</body>
+</html>

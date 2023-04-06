@@ -1,0 +1,1 @@
+allowed_file = lambda filename: "." in filename and filename.rsplit(".", 1)[1].lower() in ["csv"]

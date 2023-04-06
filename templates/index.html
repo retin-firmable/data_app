@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Admin App</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+	<header>
+		<h1>Admin App</h1>
+		<nav>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/list">List Files</a></li>
+				<li><a href="/logout">Logout</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<h2>Welcome, {{ username }}!</h2>
+		{% if is_admin %}
+		<section>
+			<h3>Create User</h3>
+			<form method="post" action="/create-user">
+				<label for="username">Username:</label>
+				<input type="text" id="username" name="username" required>
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" required>
+				<label for="is_admin">Is Admin:</label>
+				<input type="checkbox" id="is_admin" name="is_admin">
+				<button type="submit">Create User</button>
+			</form>
+		</section>
+		{% endif %}
+		<section>
+			<h3>Upload CSV File</h3>
+			<form method="post" enctype="multipart/form-data" action="/upload-csv">
+				<label for="csv_file">CSV File:</label>
+				<input type="file" id="csv_file" name="csv_file" required>
+				<button type="submit">Upload File</button>
+			</form>
+		</section>
+		{% if csv_files %}
+		<section>
+			<h3>CSV Files</h3>
+			<ul>
+				{% for csv_file in csv_files %}
+				<li><a href="/view-csv/{{ csv_file.id }}">{{ csv_file.filename }}</a></li>
+				{% endfor %}
+			</ul>
+		</section>
+		{% endif %}
+	</main>
+</body>
+</html>

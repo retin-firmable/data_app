@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h1>View CSV File</h1>
+  <h3>Column Names</h3>
+  <form method="post" action="{{ url_for('modify_columns', file_id=file_id) }}">
+    <table class="table table-striped">
+      <caption> List of csv files</caption>
+      <thead>
+        <tr>
+          {% for column in columns %}
+            <th scope="col">
+              <input type="text" name="column{{ forloop.index }}" value="{{ column }}" />
+            </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in records %}
+          <tr>
+            {% for field in record %}
+              <td>{{ field }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+</div>
+{% endblock %}
