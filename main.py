@@ -1,21 +1,30 @@
-from fastapi import FastAPI, Depends, HTTPException, UploadFile, File
+from fastapi import FastAPI, Depends, HTTPException, File, UploadFile
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
 from sqlalchemy.orm import Session
+from fastapi.exceptions import RequestValidationError
+
 from database import engine, SessionLocal, Base
 from models import User, UserType, CSVFile
 from schemas import UserCreate, UserOut, CSVFileOut
-from crud import get_user_by_email, create_user
-from auth import get_current_user, delete_user, delete_csv_file
-import csv, io
+from crud import get_user_by_email, create_user, delete_user, delete_csv_file
+from auth import get_current_user
+
+import csv
+import io
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+    "http://localhost:3000",
+    "http://localhost:8080",
+]
 
-origins = ["http://localhost", "http://localhost:8000", "http://localhost:3000", "http://localhost:8080"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -33,13 +42,6 @@ def get_db():
         yield db
     finally:
         db.close()
-
-
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> User:
-    user = get_user_by_email(db, token)
-    if not user:
-        raise HTTPException(status_code=401, detail="Invalid authentication credentials")
-    return user
 
 
 @app.post("/admin/users", response_model=UserOut)
@@ -72,12 +74,12 @@ def upload_csv_file(csv_file: UploadFile = File(...), db: Session = Depends(get_
         raise HTTPException(status_code=400, detail="Invalid file format")
     if csv_file.filesize > 250000000:
         raise HTTPException(status_code=400, detail="File size too large. Max file size is 250MB")
-        
+
     csv_data = csv.reader(io.StringIO(csv_file.file.read().decode('utf-8')))
     rows = [row for row in csv_data]
     columns = rows[0]
     data = rows[1:]
-    
+
     csv_file_db = CSVFile(
         name=csv_file.filename,
         data=data,
@@ -86,7 +88,7 @@ def upload_csv_file(csv_file: UploadFile = File(...), db: Session = Depends(get_
         upload_time=datetime.utcnow(),
         user_id=current_user.id
     )
-    
+
     db.add(csv_file_db)
     db.commit()
     db.refresh(csv_file_db)
